@@ -51,11 +51,11 @@ Los resultados se guardarán en:
 - 📁 `torrentsFound.json`: Ubicación de los archivos de cada torrent
 - 📊 `stats.json`: Estadísticas de la búsqueda
 
-### 📥 Importación a qBittorrent (Opcional)
+## 📥 Importación a qBittorrent (Opcional)
 
 Si deseas importar automáticamente los torrents encontrados a qBittorrent, puedes utilizar el script `src/scripts/importToClient.ts`:
 
-1. 🔑 **Configuración de Credenciales**
+### 1️⃣ **Configuración de Credenciales** 🔑
 
 Modifica las siguientes líneas en `src/scripts/importToClient.ts`:
 
@@ -70,7 +70,7 @@ const client = new qBittorrentClient(
 );
 ```
 
-2. 📂 **Configuración de Rutas**
+### 2️⃣ **Configuración de Rutas** 📂
 
 Si es necesario, ajusta el objeto `replaces` para mapear las rutas de origen a las rutas de destino en tu servidor:
 
@@ -81,7 +81,7 @@ const replaces = {
 };
 ```
 
-3. 🚀 **Ejecutar la Importación**
+### 3️⃣ **Ejecutar la Importación** 🚀
 
 ```bash
 bun run src/scripts/importToClient.ts
