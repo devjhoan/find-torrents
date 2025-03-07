@@ -51,6 +51,49 @@ Los resultados se guardarán en:
 - 📁 `torrentsFound.json`: Ubicación de los archivos de cada torrent
 - 📊 `stats.json`: Estadísticas de la búsqueda
 
+### 📥 Importación a qBittorrent (Opcional)
+
+Si deseas importar automáticamente los torrents encontrados a qBittorrent, puedes utilizar el script `src/scripts/importToClient.ts`:
+
+1. 🔑 **Configuración de Credenciales**
+
+Modifica las siguientes líneas en `src/scripts/importToClient.ts`:
+
+```typescript
+const client = new qBittorrentClient(
+	// URL de tu servidor qBittorrent
+	"http://tu-servidor:puerto",
+	// Tu usuario
+	"usuario",
+	// Tu contraseña
+	"contraseña"
+);
+```
+
+2. 📂 **Configuración de Rutas**
+
+Si es necesario, ajusta el objeto `replaces` para mapear las rutas de origen a las rutas de destino en tu servidor:
+
+```typescript
+const replaces = {
+	// Añade más mapeos según necesites
+	// "/dropbox/": "/downloads/",
+};
+```
+
+3. 🚀 **Ejecutar la Importación**
+
+```bash
+bun run src/scripts/importToClient.ts
+```
+
+El script:
+- ✅ Verifica duplicados antes de importar
+- 🏷️ Añade tags para identificar los torrents
+- 📁 Ajusta automáticamente las rutas de destino
+- 📝 Proporciona logs detallados del proceso
+
+
 ## 🔄 Flujo de Trabajo
 
 ```mermaid
@@ -94,48 +137,6 @@ El sistema utiliza varias optimizaciones para mejorar el rendimiento:
 - 📊 Caché de resultados para búsquedas repetidas
 - 🔍 Normalización de rutas para mejor precisión
 - 📝 Sistema de logging configurable
-
-### 📥 Importación a qBittorrent (Opcional)
-
-Si deseas importar automáticamente los torrents encontrados a qBittorrent, puedes utilizar el script `src/scripts/importToClient.ts`:
-
-1. 🔑 **Configuración de Credenciales**
-
-Modifica las siguientes líneas en `src/scripts/importToClient.ts`:
-
-```typescript
-const client = new qBittorrentClient(
-	// URL de tu servidor qBittorrent
-	"http://tu-servidor:puerto",
-	// Tu usuario
-	"usuario",
-	// Tu contraseña
-	"contraseña"
-);
-```
-
-2. 📂 **Configuración de Rutas**
-
-Si es necesario, ajusta el objeto `replaces` para mapear las rutas de origen a las rutas de destino en tu servidor:
-
-```typescript
-const replaces = {
-	// Añade más mapeos según necesites
-	// "/dropbox/": "/downloads/",
-};
-```
-
-3. 🚀 **Ejecutar la Importación**
-
-```bash
-bun run src/scripts/importToClient.ts
-```
-
-El script:
-- ✅ Verifica duplicados antes de importar
-- 🏷️ Añade tags para identificar los torrents
-- 📁 Ajusta automáticamente las rutas de destino
-- 📝 Proporciona logs detallados del proceso
 
 ## 📄 Licencia
 
