@@ -1,25 +1,31 @@
 {
-  "name": "find-torrents",
-  "module": "src/index.ts",
-  "type": "module",
-  "author": "jhoan.me (znotjhoan@gmail.com)",
-  "license": "CC BY-NC 4.0",
-  "scripts": {
-    "start": "bun run src/index.ts",
-    "dev": "bun run --hot src/index.ts",
-    "format": "bunx biome format --write",
-    "lint": "bunx biome lint",
-    "build": "bun build src/index.ts --outdir dist --target bun --format esm --minify",
-    "prod": "bun run dist/index.js"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.1",
-    "@types/bun": "^1.1.9"
-  },
-  "peerDependencies": {
-    "typescript": "^5.6.2"
-  },
-  "trustedDependencies": [
-    "@biomejs/biome"
-  ]
+	"name": "find-torrents",
+	"description": "Script para encontrar torrents e importarlos a qBittorrent",
+	"version": "1.0.0",
+	"author": "jhoan.me (znotjhoan@gmail.com)",
+	"license": "CC BY-NC 4.0",
+	"module": "src/index.ts",
+	"type": "module",
+	"scripts": {
+		"start": "bun run src/index.ts",
+		"dev": "bun run --hot src/index.ts",
+		"format": "bunx biome format --write",
+		"lint": "bunx biome lint",
+		"build": "bun build src/index.ts --outdir dist --target bun --format esm --minify",
+		"prod": "bun run dist/index.js"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.1",
+		"@types/parse-torrent": "^5.8.7",
+		"@types/bun": "^1.1.9"
+	},
+	"peerDependencies": {
+		"typescript": "^5.6.2"
+	},
+	"trustedDependencies": ["@biomejs/biome"],
+	"dependencies": {
+		"@robertklep/qbittorrent": "^1.0.1",
+		"fast-glob": "^3.3.3",
+		"parse-torrent": "^11.0.18"
+	}
 }

@@ -1,57 +1,142 @@
-# 🌮 My TypeScript Template
+# 🔍 Find Torrents
 
-This project is a template for a TypeScript project that uses Bun as the JavaScript runtime and Biome as the linter.
+> 🎯 Herramienta para buscar y localizar archivos de torrents en múltiples ubicaciones.
 
-## 🚀 Getting Started
+## ⚡️ Características
 
-### First of all, you need to install the dependencies:
+- 🚀 Búsqueda rápida en múltiples ubicaciones
+- 📊 Estadísticas detalladas de búsqueda
+- 🔄 Procesamiento en paralelo
+- 📝 Logs detallados del proceso
+- 🎯 Alta precisión en coincidencias
 
-- [Bun](https://bun.sh) - Fast all-in-one JavaScript runtime.
-- [Debian](https://www.debian.org/index.en.html) - Debian is a free operating system (OS) for your computer.
 
-### Then, you need to install the project dependencies:
+## 🔄 Proceso de Recuperación de Torrents
 
-- [Bun](https://bun.sh) - Fast all-in-one JavaScript runtime.
-- [Biome](https://biomejs.dev/) - The blazing fast and configurable linter.
-- [CI/CD](https://github.com/features/actions) - Continuous Integration and Continuous Deployment.
+### 1️⃣ Configuración de Rutas 🛠️
 
-## 📦 Installation
+Modifica el archivo `src/utils/saveAllFiles.ts` y actualiza el array `SERVERS` con las rutas donde deseas buscar:
 
-We have two ways to install the project, using a development version or a production version.
-
-### 🧪 Development Version
-
-`1.` Install the dependencies:
-```bash
-bun install
+```typescript
+const SERVERS = [
+    "/ruta/a/tu/carpeta1",
+    "/ruta/a/tu/carpeta2",
+    // Agrega más rutas según necesites
+];
 ```
 
-`2.` Run the development script:
+### 2️⃣ Escaneo de Archivos 🔍
+
+Ejecuta el script para escanear todos los archivos disponibles:
+
 ```bash
-bun run dev
+bun run src/utils/saveAllFiles.ts
 ```
 
-### 🚀 Production Version
+📄 Este script generará:
+- `allFiles.json`: Lista completa de archivos encontrados
+- `scanStats.json`: Estadísticas del escaneo
 
-`1.` Install the dependencies:
+### 3️⃣ Procesamiento de Torrents 🔄
+
+Coloca tus archivos .torrent en la carpeta `torrents/` y ejecuta:
+
 ```bash
-bun install
+bun run src/index.ts
 ```
 
-`2.` Build the project, this will generate a `dist` folder with the production build:
-```bash
-bun run build
+### 4️⃣ Resultados 📊
+
+Los resultados se guardarán en:
+- 📁 `torrentsFound.json`: Ubicación de los archivos de cada torrent
+- 📊 `stats.json`: Estadísticas de la búsqueda
+
+## 🔄 Flujo de Trabajo
+
+```mermaid
+graph TD
+    A[Configuración de Rutas] -->|saveAllFiles.ts| B[Escaneo de Archivos]
+    B -->|allFiles.json| C[Procesamiento de Torrents]
+    B -->|scanStats.json| D[Estadísticas de Escaneo]
+    C -->|torrentsFound.json| E[Resultados]
+    C -->|stats.json| F[Estadísticas de Búsqueda]
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#bfb,stroke:#333,stroke-width:2px
+    style D fill:#fbb,stroke:#333,stroke-width:2px
+    style E fill:#fbf,stroke:#333,stroke-width:2px
+    style F fill:#bff,stroke:#333,stroke-width:2px
 ```
 
-`3.` Run the production build, this will execute the `dist/index.js` file:
-```bash
-bun run prod
+## 🔧 Información Técnica
+
+### 📚 Stack Tecnológico
+
+- ⚡️ **Runtime**: [Bun](https://bun.sh) - JavaScript runtime ultrarrápido
+- 🎯 **Lenguaje**: TypeScript - Tipado estático para mejor mantenibilidad
+- 🔍 **Parser**: parse-torrent - Análisis de archivos .torrent
+- 📁 **Sistema de Archivos**: Node.js fs/promises API
+- 🔄 **Procesamiento**: Asíncrono con Promise.all para mejor rendimiento
+- 🔍 **Glob**: fast-glob - Búsqueda de archivos en múltiples ubicaciones
+
+### 🎯 Requisitos del Sistema
+
+- 🖥️ **Sistema Operativo**: Linux/macOS/Windows
+- 💾 **Memoria**: Mínimo 4GB RAM recomendado
+- 💻 **Bun**: Versión 1.2.4 o superior
+
+### ⚙️ Configuración Avanzada
+
+El sistema utiliza varias optimizaciones para mejorar el rendimiento:
+
+- 🚀 Búsqueda en paralelo de archivos
+- 📊 Caché de resultados para búsquedas repetidas
+- 🔍 Normalización de rutas para mejor precisión
+- 📝 Sistema de logging configurable
+
+### 📥 Importación a qBittorrent (Opcional)
+
+Si deseas importar automáticamente los torrents encontrados a qBittorrent, puedes utilizar el script `src/scripts/importToClient.ts`:
+
+1. 🔑 **Configuración de Credenciales**
+
+Modifica las siguientes líneas en `src/scripts/importToClient.ts`:
+
+```typescript
+const client = new qBittorrentClient(
+	// URL de tu servidor qBittorrent
+	"http://tu-servidor:puerto",
+	// Tu usuario
+	"usuario",
+	// Tu contraseña
+	"contraseña"
+);
 ```
 
-## 🤝 Contributing
+2. 📂 **Configuración de Rutas**
 
-We're open to any contributions, feel free to open an issue or a pull request.
+Si es necesario, ajusta el objeto `replaces` para mapear las rutas de origen a las rutas de destino en tu servidor:
 
-## 📄 License
+```typescript
+const replaces = {
+	// Añade más mapeos según necesites
+	// "/dropbox/": "/downloads/",
+};
+```
 
-This project is licensed under the [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) License.
+3. 🚀 **Ejecutar la Importación**
+
+```bash
+bun run src/scripts/importToClient.ts
+```
+
+El script:
+- ✅ Verifica duplicados antes de importar
+- 🏷️ Añade tags para identificar los torrents
+- 📁 Ajusta automáticamente las rutas de destino
+- 📝 Proporciona logs detallados del proceso
+
+## 📄 Licencia
+
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) - ⚖️ Creative Commons Attribution Non Commercial

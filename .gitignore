@@ -2,3 +2,8 @@ node_modules/
 .env
 bun.lockb
 dist/
+torrents/
+torrentsFound.json
+stats.json
+allFiles.json
+bun.lock
